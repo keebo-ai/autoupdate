@@ -17,8 +17,11 @@ jobs:
           username: ${{ github.repository_owner }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Build & Push
-        uses: docker/build-push-action@v2
-        with:
-          push: true
-          tags: keebo-ai/automerge-action:v1
+      - name: Docker Build
+        run: docker build -t "keebo-ai/automerge-action:v1" .
+
+      - name: Docker Tag
+        run: docker tag "keebo-ai/automerge-action:v1" "keebo-ai/automerge-action:latest"
+
+      - name: Docker Push
+        run: docker push "ghcr.io:keebo-ai/automerge-action:v1"
